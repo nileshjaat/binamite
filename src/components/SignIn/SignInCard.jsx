@@ -79,7 +79,7 @@ const SignInCard = () => {
           )}
         </FormField>
         <CreateButton type="submit">
-          <CreateButtonText>Create an account</CreateButtonText>
+          <CreateButtonText>Sign In</CreateButtonText>
         </CreateButton>
       </form>
       <GoogleButton>

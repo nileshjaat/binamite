@@ -1,9 +1,15 @@
-import React from 'react'
+import React from 'react';
+import Profile from './Profile';
+import Sidebar from './Sidebar';
+import { Wrapper } from './styledComponents';
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <Wrapper>
+      <Sidebar />
+      <Profile />
+    </Wrapper>
+  );
+};
 
-export default Home
+export default Home;
