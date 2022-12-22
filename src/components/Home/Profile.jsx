@@ -22,15 +22,21 @@ import {
 import Manage from '../../assets/edit.png';
 import ProfilePic from '../../assets/profile-pic.png';
 import EditPersonalDetailsModal from './EditPersonalDetailsModal';
+import EditAddressModal from './EditAddressModal';
 
 const Profile = () => {
   const [editProfileDetailsModal, setEditProfileDetailsModal] = useState(false);
+  const [editAddressModal, setEditAddressModal] = useState(false);
 
   return (
     <PageContainer>
       <EditPersonalDetailsModal
         editProfileDetailsModal={editProfileDetailsModal}
         setEditProfileDetailsModal={setEditProfileDetailsModal}
+      />
+      <EditAddressModal
+        editAddressModal={editAddressModal}
+        setEditAddressModal={setEditAddressModal}
       />
       <PageTitle>Contractor Profile</PageTitle>
       <ProfileContainer>
@@ -73,7 +79,7 @@ const Profile = () => {
           <ProfileCard>
             <CardHeader>
               <CardTitle>Address Location</CardTitle>
-              <ManageButton>
+              <ManageButton onClick={() => setEditAddressModal(true)}>
                 <img src={Manage} alt="manage" style={{ marginRight: '7px' }} />
                 <ManageButtonText>Manage</ManageButtonText>
               </ManageButton>

@@ -204,11 +204,11 @@ export const EditModalWrapper = styled.div`
   width: 25%;
   background-color: #ffffff;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
-  padding: 50px 40px;
+  padding: 20px 30px;
 `;
 
 export const ModalInfoText = styled.p`
-  margin: 10px 0 40px 0;
+  margin: 10px 0 20px 0;
   font-family: 'Rubik';
   font-style: normal;
   font-weight: 400;

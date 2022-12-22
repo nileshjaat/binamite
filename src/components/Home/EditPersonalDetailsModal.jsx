@@ -15,7 +15,6 @@ import {
   FormField,
   FormInput,
   FormLabel,
-  InfoText,
 } from '../SignIn/styledComponents';
 
 const EditPersonalDetailsModal = ({
