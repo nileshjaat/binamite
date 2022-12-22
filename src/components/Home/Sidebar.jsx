@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SidebarContainer,
   TabContainer,
@@ -12,8 +12,33 @@ import PayoutMethods from '../../assets/payout-methods.png';
 import Profile from '../../assets/profile.png';
 import Settings from '../../assets/settings.png';
 import Logout from '../../assets/logout.png';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { axios } from '../../core';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
+  const [isFetching, setIsFetching] = useState(false);
+  const navigate = useNavigate();
+
+  const onLogout = async () => {
+    setIsFetching(true);
+
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/auth/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      setIsFetching(false);
+      navigate('/');
+      localStorage.removeItem('user');
+    } catch (error) {
+      console.log('err', error);
+    }
+  };
+
   return (
     <SidebarContainer>
       <TabsContainer>
@@ -44,10 +69,23 @@ const Sidebar = () => {
         </TabContainer>
       </TabsContainer>
 
-      <TabContainer style={{ marginBottom: '-10px', marginTop: '100px' }}>
-        <img src={Logout} alt="logout" />
-        <TabName>Logout</TabName>
-      </TabContainer>
+      {isFetching ? (
+        <ClipLoader
+          color="#f5df4d"
+          loading={true}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <TabContainer
+          style={{ marginBottom: '-10px', marginTop: '100px' }}
+          onClick={onLogout}
+        >
+          <img src={Logout} alt="logout" />
+          <TabName>Logout</TabName>
+        </TabContainer>
+      )}
     </SidebarContainer>
   );
 };

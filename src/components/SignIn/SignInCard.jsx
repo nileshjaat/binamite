@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { sha256 } from 'js-sha256';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { useNavigate } from 'react-router-dom';
 import {
   CreateButton,
   CreateButtonText,
@@ -14,6 +17,7 @@ import {
 } from './styledComponents';
 import { useForm } from 'react-hook-form';
 import Google from '../../assets/google.png';
+import { axios } from '../../core';
 
 const SignInCard = () => {
   const {
@@ -21,9 +25,31 @@ const SignInCard = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log('data', data);
-    console.log('errors', errors);
+
+  const [isFetching, setIsFetching] = useState(false);
+  const navigate = useNavigate();
+
+  const onSubmit = async (form) => {
+    const cryptedPassword = sha256.create().update(form.password).hex();
+    setIsFetching(true);
+
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/auth/signin`,
+        {
+          email: form.email,
+          password: cryptedPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      localStorage.setItem('user', data);
+      setIsFetching(false);
+      navigate('/home');
+    } catch (error) {
+      console.log('err', error);
+    }
   };
 
   return (
@@ -78,9 +104,21 @@ const SignInCard = () => {
             </InfoText>
           )}
         </FormField>
-        <CreateButton type="submit">
-          <CreateButtonText>Sign In</CreateButtonText>
-        </CreateButton>
+        {isFetching ? (
+          <div style={{ margin: '0 0 0 150px' }}>
+            <ClipLoader
+              color="#f5df4d"
+              loading={true}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>
+        ) : (
+          <CreateButton type="submit">
+            <CreateButtonText>Sign In</CreateButtonText>
+          </CreateButton>
+        )}
       </form>
       <GoogleButton>
         <img src={Google} alt="google" style={{ marginRight: '11px' }} />

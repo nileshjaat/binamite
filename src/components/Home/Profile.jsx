@@ -24,7 +24,7 @@ import ProfilePic from '../../assets/profile-pic.png';
 import EditPersonalDetailsModal from './EditPersonalDetailsModal';
 import EditAddressModal from './EditAddressModal';
 
-const Profile = () => {
+const Profile = ({ details }) => {
   const [editProfileDetailsModal, setEditProfileDetailsModal] = useState(false);
   const [editAddressModal, setEditAddressModal] = useState(false);
 
@@ -33,10 +33,12 @@ const Profile = () => {
       <EditPersonalDetailsModal
         editProfileDetailsModal={editProfileDetailsModal}
         setEditProfileDetailsModal={setEditProfileDetailsModal}
+        details={details}
       />
       <EditAddressModal
         editAddressModal={editAddressModal}
         setEditAddressModal={setEditAddressModal}
+        details={details}
       />
       <PageTitle>Contractor Profile</PageTitle>
       <ProfileContainer>
@@ -58,7 +60,7 @@ const Profile = () => {
               <ProfileDetails>
                 <ProfileDetail>
                   <Label>Full Name</Label>
-                  <Field>Nikhil Bhintade</Field>
+                  <Field>{details.name}</Field>
                 </ProfileDetail>
                 <ProfileDetail>
                   <Label>Username</Label>
@@ -66,7 +68,7 @@ const Profile = () => {
                 </ProfileDetail>
                 <ProfileDetail>
                   <Label>Email Address</Label>
-                  <Field>nikhilbhintade@octaloop.com</Field>
+                  <Field>{details.email}</Field>
                 </ProfileDetail>
                 <ProfileDetail>
                   <Label>Phone Number</Label>
@@ -93,8 +95,8 @@ const Profile = () => {
                 <ProfileDetail>
                   <Label>Primary</Label>
                   <Field>
-                    A-83, Second Floor, Pocket D, Okhla Phase II, <br /> Okhla
-                    Industrial Estate, New Delhi, <br /> Delhi 110020
+                    {details.address}, <br /> {details.city}, {details.state},
+                    <br /> {details.country} {details.zipCode}
                   </Field>
                 </ProfileDetail>
               </ProfileDetails>

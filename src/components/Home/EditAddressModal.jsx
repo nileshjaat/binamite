@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ButtonsContainer,
   CancelButton,
@@ -15,16 +15,53 @@ import {
   FormInput,
   FormLabel,
 } from '../SignIn/styledComponents';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { axios } from '../../core';
 
-const EditAddressModal = ({ editAddressModal, setEditAddressModal }) => {
+const EditAddressModal = ({
+  editAddressModal,
+  setEditAddressModal,
+  details,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log('data', data);
-    console.log('errors', errors);
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  const onSubmit = async (form) => {
+    setIsFetching(true);
+
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/auth/updateProfile`,
+        {
+          ...details,
+          address: form.address,
+          city: form.city,
+          state: form.state,
+          country: form.country,
+          zipCode: form.zipCode,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setIsFetching(false);
+      setEditAddressModal(false);
+    } catch (error) {
+      console.log('err', error);
+    }
+  };
+
+  const intialValues = {
+    address: details.address,
+    city: details.city,
+    state: details.state,
+    country: details.country,
+    zipCode: details.zipCode,
   };
 
   return (
@@ -36,6 +73,7 @@ const EditAddressModal = ({ editAddressModal, setEditAddressModal }) => {
             <FormField>
               <FormLabel htmlFor="address">Address</FormLabel>
               <FormInput
+                defaultValue={intialValues.address}
                 placeholder="Address"
                 type="address"
                 {...register('address', {
@@ -49,6 +87,7 @@ const EditAddressModal = ({ editAddressModal, setEditAddressModal }) => {
             <FormField>
               <FormLabel htmlFor="city">City</FormLabel>
               <FormInput
+                defaultValue={intialValues.city}
                 placeholder="City"
                 type="city"
                 {...register('city', {
@@ -60,6 +99,7 @@ const EditAddressModal = ({ editAddressModal, setEditAddressModal }) => {
             <FormField>
               <FormLabel htmlFor="state">State</FormLabel>
               <FormInput
+                defaultValue={intialValues.state}
                 placeholder="State"
                 type="state"
                 {...register('state', {
@@ -71,6 +111,7 @@ const EditAddressModal = ({ editAddressModal, setEditAddressModal }) => {
             <FormField>
               <FormLabel htmlFor="country">Country</FormLabel>
               <FormInput
+                defaultValue={intialValues.country}
                 placeholder="Country"
                 type="country"
                 {...register('country', {
@@ -84,6 +125,7 @@ const EditAddressModal = ({ editAddressModal, setEditAddressModal }) => {
             <FormField>
               <FormLabel htmlFor="zipCode">Zip Code</FormLabel>
               <FormInput
+                defaultValue={intialValues.zipCode}
                 placeholder="Zip Code"
                 type="zipCode"
                 {...register('zipCode', {
@@ -95,9 +137,19 @@ const EditAddressModal = ({ editAddressModal, setEditAddressModal }) => {
               )}
             </FormField>
             <ButtonsContainer>
-              <UpdateButton type="submit">
-                <UpdateButtonText>Update Details</UpdateButtonText>
-              </UpdateButton>
+              {isFetching ? (
+                <ClipLoader
+                  color="#f5df4d"
+                  loading={true}
+                  size={50}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              ) : (
+                <UpdateButton type="submit">
+                  <UpdateButtonText>Update Details</UpdateButtonText>
+                </UpdateButton>
+              )}
               <CancelButton
                 type="button"
                 onClick={() => setEditAddressModal(false)}

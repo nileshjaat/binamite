@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ButtonsContainer,
   CancelButton,
@@ -9,6 +9,7 @@ import {
   UpdateButton,
   UpdateButtonText,
 } from './styledComponents';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { useForm } from 'react-hook-form';
 import {
   ErrorText,
@@ -16,19 +17,46 @@ import {
   FormInput,
   FormLabel,
 } from '../SignIn/styledComponents';
+import { axios } from '../../core';
 
 const EditPersonalDetailsModal = ({
   editProfileDetailsModal,
   setEditProfileDetailsModal,
+  details,
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log('data', data);
-    console.log('errors', errors);
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  const onSubmit = async (form) => {
+    setIsFetching(true);
+
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/api/auth/updateProfile`,
+        {
+          ...details,
+          email: form.email,
+          name: form.fullName,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setIsFetching(false);
+      setEditProfileDetailsModal(false);
+    } catch (error) {
+      console.log('err', error);
+    }
+  };
+
+  const intialValues = {
+    fullName: details.name,
+    email: details.email,
   };
 
   return (
@@ -44,6 +72,7 @@ const EditPersonalDetailsModal = ({
             <FormField>
               <FormLabel htmlFor="fullName">Full Name</FormLabel>
               <FormInput
+                defaultValue={intialValues.fullName}
                 placeholder="Full Name"
                 type="fullName"
                 {...register('fullName', {
@@ -57,6 +86,7 @@ const EditPersonalDetailsModal = ({
             <FormField>
               <FormLabel htmlFor="email">Email ID</FormLabel>
               <FormInput
+                defaultValue={intialValues.email}
                 placeholder="name@email.com"
                 type="email"
                 {...register('email', {
@@ -97,9 +127,20 @@ const EditPersonalDetailsModal = ({
               {errors.phone && <ErrorText>{errors.phone.message}</ErrorText>}
             </FormField>
             <ButtonsContainer>
-              <UpdateButton type="submit">
-                <UpdateButtonText>Update Details</UpdateButtonText>
-              </UpdateButton>
+              {isFetching ? (
+                <ClipLoader
+                  color="#f5df4d"
+                  loading={true}
+                  size={50}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              ) : (
+                <UpdateButton type="submit">
+                  <UpdateButtonText>Update Details</UpdateButtonText>
+                </UpdateButton>
+              )}
+
               <CancelButton
                 type="button"
                 onClick={() => setEditProfileDetailsModal(false)}
