@@ -193,3 +193,73 @@ export const VerifyButtonText = styled.p`
   line-height: 17px;
   color: #ffffff;
 `;
+
+export const EditModalWrapper = styled.div`
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 0;
+  height: 100vh;
+  width: 25%;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
+  padding: 50px 40px;
+`;
+
+export const ModalInfoText = styled.p`
+  margin: 10px 0 40px 0;
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #97999b;
+`;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+`;
+
+export const UpdateButton = styled.button`
+  display: flex;
+  background-color: #1a1a1a;
+  border-radius: 20px;
+  align-items: center;
+  padding: 14px 24px;
+  border: none;
+  cursor: pointer;
+  justify-content: center;
+`;
+
+export const UpdateButtonText = styled.p`
+  margin: 0;
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+`;
+
+export const CancelButton = styled.button`
+  display: flex;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  align-items: center;
+  padding: 14px 24px;
+  border: none;
+  cursor: pointer;
+  justify-content: center;
+  margin-left: 10px;
+`;
+
+export const CancelButtonText = styled.p`
+  margin: 0;
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #97999b;
+`;

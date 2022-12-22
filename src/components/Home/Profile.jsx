@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   PageTitle,
   ProfileCard,
@@ -21,17 +21,24 @@ import {
 } from './styledComponents';
 import Manage from '../../assets/edit.png';
 import ProfilePic from '../../assets/profile-pic.png';
+import EditPersonalDetailsModal from './EditPersonalDetailsModal';
 
 const Profile = () => {
+  const [editProfileDetailsModal, setEditProfileDetailsModal] = useState(false);
+
   return (
     <PageContainer>
+      <EditPersonalDetailsModal
+        editProfileDetailsModal={editProfileDetailsModal}
+        setEditProfileDetailsModal={setEditProfileDetailsModal}
+      />
       <PageTitle>Contractor Profile</PageTitle>
       <ProfileContainer>
         <Col>
           <ProfileCard>
             <CardHeader>
               <CardTitle>Profile</CardTitle>
-              <ManageButton>
+              <ManageButton onClick={() => setEditProfileDetailsModal(true)}>
                 <img src={Manage} alt="manage" style={{ marginRight: '7px' }} />
                 <ManageButtonText>Manage</ManageButtonText>
               </ManageButton>
