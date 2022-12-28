@@ -9,6 +9,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 const Home = () => {
   const navigate = useNavigate();
   const [isFetching, setIsFetching] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
   const [details, setDetails] = useState([]);
 
   const getUserDetails = async () => {
@@ -39,7 +40,7 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <Sidebar />
+      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       {isFetching ? (
         <div style={{ margin: '300px auto' }}>
           <ClipLoader
@@ -51,7 +52,11 @@ const Home = () => {
           />
         </div>
       ) : (
-        <Profile details={details} />
+        <Profile
+          details={details}
+          showSidebar={showSidebar}
+          setShowSidebar={setShowSidebar}
+        />
       )}
     </Wrapper>
   );

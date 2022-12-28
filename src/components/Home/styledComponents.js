@@ -11,11 +11,40 @@ export const SidebarContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 30px 21px;
+
+  @media (max-width: 540px) {
+    background-color: ${(props) => (props.showSidebar ? '#ffffff' : '#f5f5f5')};
+    z-index: 1;
+  }
+`;
+
+export const MobileSidebarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+
+  @media (min-width: 541px) {
+    display: none;
+    background-color: #ffffff;
+  }
+`;
+
+export const MobileSidebar = styled.div`
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 50px 0px;
+  height: 100%;
 `;
 
 export const TabsContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 540px) {
+    display: none;
+  }
 `;
 
 export const TabContainer = styled.div`
@@ -25,6 +54,31 @@ export const TabContainer = styled.div`
   align-items: center;
   margin-bottom: 40px;
   cursor: pointer;
+`;
+
+export const LogoContainer = styled.div`
+  display: flex;
+  cursor: pointer;
+
+  @media (min-width: 541px) {
+    display: none;
+  }
+`;
+
+export const MobileLogoutContainer = styled.div`
+  display: ${(props) => (props.showSidebar ? 'flex' : 'none')};
+
+  @media (min-width: 541px) {
+    display: none;
+  }
+`;
+
+export const LogoutContainer = styled.div`
+  display: flex;
+
+  @media (max-width: 540px) {
+    display: none;
+  }
 `;
 
 export const TabName = styled.p`
@@ -52,6 +106,7 @@ export const PageContainer = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
+  z-index: ${(props) => (props.showSidebar ? 0 : 1)};
 `;
 
 export const ProfileContainer = styled.div`
@@ -59,6 +114,13 @@ export const ProfileContainer = styled.div`
   gap: 40px;
   padding: 40px;
   justify-content: center;
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+    padding: 20px 0px 20px 40px;
+    gap: 0px;
+    margin-left: -110px;
+  }
 `;
 
 export const Col = styled.div`
@@ -76,6 +138,10 @@ export const ProfileCard = styled.div`
   width: 90%;
   margin-bottom: 40px;
   padding: 30px;
+
+  @media (max-width: 540px) {
+    width: 80%;
+  }
 `;
 
 export const CardHeader = styled.div`
@@ -93,6 +159,10 @@ export const CardTitle = styled.p`
   font-size: 24px;
   line-height: 28px;
   color: #1a1a1a;
+
+  @media (max-width: 540px) {
+    font-size: 18px;
+  }
 `;
 
 export const ManageButton = styled.button`
@@ -117,11 +187,21 @@ export const ProfileContent = styled.div`
   display: flex;
   margin-top: 20px;
   align-items: flex-start;
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const ProfileDetails = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 540px) {
+    margin-top: 20px;
+    width: 100%;
+  }
 `;
 
 export const ProfileDetail = styled.div`
@@ -205,6 +285,10 @@ export const EditModalWrapper = styled.div`
   background-color: #ffffff;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
   padding: 20px 30px;
+
+  @media (max-width: 540px) {
+    width: 70%;
+  }
 `;
 
 export const ModalInfoText = styled.p`

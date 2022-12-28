@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import {
+  LogoContainer,
+  LogoutContainer,
+  MobileLogoutContainer,
+  MobileSidebar,
+  MobileSidebarContainer,
   SidebarContainer,
   TabContainer,
   TabName,
@@ -16,7 +21,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import { axios } from '../../core';
 import { useNavigate } from 'react-router-dom';
 
-const Sidebar = () => {
+const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const [isFetching, setIsFetching] = useState(false);
   const navigate = useNavigate();
 
@@ -40,7 +45,59 @@ const Sidebar = () => {
   };
 
   return (
-    <SidebarContainer>
+    <SidebarContainer showSidebar={showSidebar}>
+      <MobileSidebarContainer showSidebar={showSidebar}>
+        <LogoContainer onClick={() => setShowSidebar(!showSidebar)}>
+          <img src={Logo} alt="logo" />
+        </LogoContainer>
+        {showSidebar && (
+          <MobileSidebar>
+            <TabContainer>
+              <img src={Dashboard} alt="dashboard" />
+              <TabName>Dashboard</TabName>
+            </TabContainer>
+            <TabContainer>
+              <img src={Invoices} alt="invoices" />
+              <TabName>Invoices</TabName>
+            </TabContainer>
+            <TabContainer>
+              <img src={PayoutMethods} alt="payout-methods" />
+              <TabName>
+                Payout <br /> Methods
+              </TabName>
+            </TabContainer>
+            <TabContainer>
+              <img src={Profile} alt="profile" />
+              <TabName>Profile</TabName>
+            </TabContainer>
+            <TabContainer>
+              <img src={Settings} alt="settings" />
+              <TabName>Settings</TabName>
+            </TabContainer>
+          </MobileSidebar>
+        )}
+      </MobileSidebarContainer>
+
+      <MobileLogoutContainer showSidebar={showSidebar}>
+        {isFetching ? (
+          <ClipLoader
+            color="#f5df4d"
+            loading={true}
+            size={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        ) : (
+          <TabContainer
+            style={{ marginBottom: '-10px', marginTop: '100px' }}
+            onClick={onLogout}
+          >
+            <img src={Logout} alt="logout" />
+            <TabName>Logout</TabName>
+          </TabContainer>
+        )}
+      </MobileLogoutContainer>
+
       <TabsContainer>
         <TabContainer>
           <img src={Logo} alt="logo" />
@@ -69,23 +126,25 @@ const Sidebar = () => {
         </TabContainer>
       </TabsContainer>
 
-      {isFetching ? (
-        <ClipLoader
-          color="#f5df4d"
-          loading={true}
-          size={50}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-      ) : (
-        <TabContainer
-          style={{ marginBottom: '-10px', marginTop: '100px' }}
-          onClick={onLogout}
-        >
-          <img src={Logout} alt="logout" />
-          <TabName>Logout</TabName>
-        </TabContainer>
-      )}
+      <LogoutContainer>
+        {isFetching ? (
+          <ClipLoader
+            color="#f5df4d"
+            loading={true}
+            size={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        ) : (
+          <TabContainer
+            style={{ marginBottom: '-10px', marginTop: '100px' }}
+            onClick={onLogout}
+          >
+            <img src={Logout} alt="logout" />
+            <TabName>Logout</TabName>
+          </TabContainer>
+        )}
+      </LogoutContainer>
     </SidebarContainer>
   );
 };

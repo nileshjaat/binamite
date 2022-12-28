@@ -12,6 +12,21 @@ export const HeaderContainer = styled.div`
   display: flex;
   padding: 30px 80px;
   justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  @media (max-width: 540px) {
+    padding: 15px 30px;
+  }
+`;
+
+export const MenuIconContainer = styled.div`
+  display: flex;
+  cursor: pointer;
+
+  @media (min-width: 541px) {
+    display: none;
+  }
 `;
 
 export const Title = styled.p`
@@ -28,6 +43,10 @@ export const LinksContainer = styled.div`
   display: flex;
   align-items: center;
   margin-right: 30px;
+
+  @media (max-width: 540px) {
+    display: none;
+  }
 `;
 
 export const LinkTitle = styled.p`
@@ -42,6 +61,10 @@ export const LinkTitle = styled.p`
 
 export const ButtonsContainer = styled.div`
   display: flex;
+
+  @media (max-width: 540px) {
+    display: none;
+  }
 `;
 
 export const ActionButton = styled.button`
@@ -52,6 +75,11 @@ export const ActionButton = styled.button`
   padding: 14px 24px;
   border: none;
   cursor: pointer;
+
+  @media (max-width: 540px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 export const ActionButtonText = styled.p`
@@ -64,10 +92,37 @@ export const ActionButtonText = styled.p`
   color: #1a1a1a;
 `;
 
+export const DropdownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  z-index: 1;
+  background-color: #1a1a1a;
+  width: 90%;
+  left: 0;
+  padding: 10px 20px;
+
+  @media (min-width: 541px) {
+    display: none;
+  }
+`;
+
+export const DropdownItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+`;
+
 export const CardContainer = styled.div`
   align-self: flex-end;
   width: 30%;
   margin: 20px 280px 0 0;
+
+  @media (max-width: 540px) {
+    width: 90%;
+    margin: 30px auto 0 auto;
+  }
 `;
 
 export const SignInCardContainer = styled.div`

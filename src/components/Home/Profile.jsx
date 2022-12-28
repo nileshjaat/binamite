@@ -24,12 +24,12 @@ import ProfilePic from '../../assets/profile-pic.png';
 import EditPersonalDetailsModal from './EditPersonalDetailsModal';
 import EditAddressModal from './EditAddressModal';
 
-const Profile = ({ details }) => {
+const Profile = ({ details, showSidebar }) => {
   const [editProfileDetailsModal, setEditProfileDetailsModal] = useState(false);
   const [editAddressModal, setEditAddressModal] = useState(false);
 
   return (
-    <PageContainer>
+    <PageContainer showSidebar={showSidebar}>
       <EditPersonalDetailsModal
         editProfileDetailsModal={editProfileDetailsModal}
         setEditProfileDetailsModal={setEditProfileDetailsModal}
